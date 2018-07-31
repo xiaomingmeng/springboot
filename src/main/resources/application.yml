@@ -1,0 +1,68 @@
+server:
+    port: 8000
+
+
+spring:
+    #redis
+    redis:
+        enabled: true
+        database: 0
+        host: 192.168.106.18
+        port: 6379
+        password:     # 密码（默认为空）
+        timeout: 6000  # 连接超时时长（毫秒）
+        pool:
+            max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+            max-wait: -1      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+            max-idle: 10      # 连接池中的最大空闲连接
+            min-idle: 5       # 连接池中的最小空闲连接
+    # 数据源配置
+    datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.106.17:3306/springboot_test?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: cheyipai
+
+      # Druid连接池配置
+      type: com.alibaba.druid.pool.DruidDataSource
+      # 初始化
+      initialSize: 3
+      # 最大
+      maxActive: 20
+      # 最小
+      minIdle: 3
+      # 最大连接等待超时时间
+      maxWait: 60000
+      # 打开PSCache,并且指定每个连接PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 配置间隔多久才进行一次检测,检测需要关闭的空闲连接,单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间,单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置监控统计拦截的filters,去掉后监控界面sql将无法统计,'wall'用于防火墙
+      filters: stat, wall, log4j
+    # spring data jpa配置
+    jpa:
+      hibernate:
+        # 实体类有更新时，数据库表更新
+        ddl-auto: update
+      show-sql: true
+      format_sql: true
+      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#登陆认证
+uaa:
+   #多个用逗号隔开
+   url: /test/**
+# http://localhost:8080/swagger-ui.html
+#集合kafka
+souche:
+  kafka:
+    binder:
+      brokers: 192.168.106.5:9092
+      zk-nodes: 192.168.106.5:2181
+    group: test
